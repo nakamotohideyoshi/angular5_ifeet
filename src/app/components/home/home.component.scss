@@ -1,10 +1,11 @@
-.container {
+.container-fluid {
+  min-width: 1280px;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  
 
-  background: url(../../../assets/background.jpg) no-repeat center fixed;
+  background: url(../../../assets/background.png) no-repeat center fixed;
   -webkit-background-size: cover; /* pour anciens Chrome et Safari */
   background-size: cover; /* version standardisée */
 
@@ -12,6 +13,61 @@
     color: white;
     margin:0;
     padding:50px 20px;
+  }
+  .container{
+    min-width: 1280px;
+    height: 900px;
+    .top{
+      height: 150px;
+      .menu{
+        img{
+          width: 40px;
+          height: 40px;
+        }
+        span{
+          width: 150px;
+          color: #fff;
+          font-size: 25px;
+          font-weight: 500;
+        }
+      }
+      .left{
+        height: 100%;
+      }
+      .middle{
+        background-color: #e00e0e;
+        height: 100%;
+        img{
+          width: 800px;
+          height: 600px;
+        }
+      }
+      .right{
+        height: 100%;
+      }
+    }
+    .bottom{
+      height: 600px;
+      .left{
+        max-width: 200px;
+        background-color: #badf15;
+        height: 100%;        
+      }
+      .middle{
+        max-width: 800px;
+        height: 100%;
+      }
+      .right{
+        max-width: 200px;
+        background-color: #e0d2d2;
+        height: 100%;
+      }
+    }
+    .source{
+      width: 180px;
+      height: 135px;
+      background-color: #e46917;
+    }
   }
 
 }

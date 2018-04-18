@@ -19,10 +19,14 @@ function createWindow() {
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height
+    x: 800,
+    y: 600,
+    width: 1280,
+    height: 960,
+    resizable: true,
+    webPreferences: {
+      devTools: false
+    }
   });
 
   if (serve) {
