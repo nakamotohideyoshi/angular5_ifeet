@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  isVisibleDeviationMarker: Boolean;
+  constructor() {
+    this.isVisibleDeviationMarker = false;
+  }
+
+  toggleDeviationMarker() {
+    this.isVisibleDeviationMarker = !this.isVisibleDeviationMarker;
+  }
 
   ngOnInit() {
   }

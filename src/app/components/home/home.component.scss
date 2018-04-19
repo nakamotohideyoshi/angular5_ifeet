@@ -83,8 +83,25 @@
         .btn-capture{
           width: 80px;
           height: 80px;
-          right: 0;
+          right: 10px;
           top: 10px;
+        }
+        .deviation-marker{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 80px;
+          height: 80px;
+          left: calc(50% - 40px);
+          top: calc(50% - 40px);
+          border: solid 3px red;
+          border-radius: 50%;
+          .deviation-pointer{
+            width: 10px;
+            height: 10px;
+            border: solid 2px aqua;
+            border-radius: 50%;
+          }
         }
       }
       .right{
