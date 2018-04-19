@@ -17,6 +17,7 @@
   .container{
     min-width: 1280px;
     height: 900px;
+
     .top{
       height: 150px;
       .menu{
@@ -31,21 +32,41 @@
           font-weight: 500;
         }
       }
+
       .left{
         height: 100%;
       }
+      
       .middle{
-        background-color: #e00e0e;
         height: 100%;
-        img{
-          width: 800px;
-          height: 600px;
+        .license{
+          height: 30%;
         }
+        .deviation-group{
+          height: 60%;
+          .deviation{
+            width: 40%;
+            height: 80%;
+            border: solid 3px #fff;
+            border-radius: 10px;
+            .title{
+              color: #000;
+              font-size: 14px;
+              font-weight: 600;
+            }
+            .value{
+              color: red;
+              font-size: 24px;
+              font-weight: 700;
+            }
+          }
+        }       
       }
       .right{
         height: 100%;
       }
     }
+
     .bottom{
       height: 600px;
       .left{
@@ -55,12 +76,23 @@
       .middle{
         max-width: 800px;
         height: 100%;
+        img{
+          width: 800px;
+          height: 600px;
+        }
+        .btn-capture{
+          width: 80px;
+          height: 80px;
+          right: 0;
+          top: 10px;
+        }
       }
       .right{
         max-width: 200px;
         height: 100%;
       }
     }
+
     .side-background{
       width: 100%;
       height: 100%;
@@ -78,10 +110,14 @@
         font-weight: 400;
       }
     }
+
     .source{
       width: 180px;
       height: 135px;      
       .frame{
+        width: 100%;
+      }
+      .capture{
         width: 100%;
       }
     }
