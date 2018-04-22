@@ -4,4 +4,10 @@ html, body {
   padding: 0;
 
   height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+  img{
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 }
