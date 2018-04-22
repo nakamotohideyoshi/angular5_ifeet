@@ -12,7 +12,7 @@
           <span class="text-center mb-0 align-middle">Exit</span>
         </div>
         <div class="menu d-flex flex-wrap justify-content-around">
-          <img class="menu-img" src="assets/btn-webcam.png">
+          <img  id="start" class="menu-img" src="assets/btn-webcam.png" (click)="toggleCamera()">
           <span class="text-center mb-0 align-middle">Source</span>
         </div>
         <div class="menu d-flex flex-wrap justify-content-around">
@@ -39,7 +39,7 @@
       <div class="right col-md-3 d-flex flex-column justify-content-around">
         <div class="menu d-flex flex-wrap justify-content-center">
           <img class="menu-img" src="assets/btn-restart.png" (click)="toggleDeviationMarker()">
-          <img class="menu-img" src="assets/foot-left.png">
+          <img class="menu-img" src="assets/foot-left.png" (click)="toggleFootMarker()">
         </div>
       </div>
 
@@ -53,24 +53,27 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
+              <img class="capture position-absolute" src="{{snapshots[0]}}">
+              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
-              <img class="capture" src="assets/foot-background.png">
             </div>
             <span class="mt-1">Back, standing straight</span>
           </div>
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
+              <img class="capture position-absolute" src="{{snapshots[1]}}">
+              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
-              <img class="capture" src="assets/foot-background.png">
             </div>
             <span class="mt-1">Back, Kness Bent 45°</span>
           </div>
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
+              <img class="capture position-absolute" src="{{snapshots[2]}}">
+              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
-              <img class="capture" src="assets/foot-background.png">
             </div>
             <span class="mt-1">Back, raise toes up</span>
           </div>            
@@ -79,7 +82,9 @@
 
       <div class="middle col-md-8 px-0 position-relative">
         <img src="assets/foot-background.png">
-        <img class="btn-capture position-absolute" src="assets/btn-camera.png">
+        <div id="camdemo" class="position-absolute d-flex" style="text-align: center; margin: 0 auto;"></div>
+        <img id="savefile" class="btn-capture position-absolute" src="assets/btn-camera.png" (click)="captureImage()">
+        <img class="foot-marker position-absolute" src="{{footmarker}}">        
         <div class="deviation-marker position-absolute"  [hidden]="!isVisibleDeviationMarker">
           <div class="deviation-pointer"></div>
         </div>
@@ -91,24 +96,28 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
+              <img class="capture position-absolute" src="{{snapshots[3]}}">
+              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
-              <img class="capture" src="assets/foot-background.png">
+              
             </div>
             <span class="mt-1">Back, standing straight</span>
           </div>
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
+              <img class="capture position-absolute" src="{{snapshots[4]}}">
+              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
-              <img class="capture" src="assets/foot-background.png">
             </div>
             <span class="mt-1">Back, Kness Bent 45°</span>
           </div>
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
+              <img class="capture position-absolute" src="{{snapshots[5]}}">
+              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
-              <img class="capture" src="assets/foot-background.png">
             </div>
             <span class="mt-1">Back, raise toes up</span>
           </div>            

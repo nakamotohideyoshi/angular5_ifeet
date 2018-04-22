@@ -35,16 +35,19 @@
     "e2e": "npm-run-all -p -r pree2e:build pree2e:protractor"
   },
   "dependencies": {
+    "@angular/animations": "^5.2.9",
     "bootstrap": "^4.1.0",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.3"
+    "ngx-webcam": "^0.1.4",
+    "popper.js": "^1.14.3",
+    "webcamjs": "^1.0.25"
   },
   "devDependencies": {
     "@angular/cli": "1.7.4",
     "@angular/common": "5.2.9",
     "@angular/compiler": "5.2.9",
     "@angular/compiler-cli": "5.2.9",
-    "@angular/core": "5.2.9",
+    "@angular/core": "^5.2.9",
     "@angular/forms": "5.2.9",
     "@angular/http": "5.2.9",
     "@angular/language-service": "5.2.9",
@@ -61,7 +64,7 @@
     "core-js": "2.5.5",
     "cross-env": "5.1.4",
     "dotenv": "5.0.1",
-    "electron": "1.8.4",
+    "electron": "^1.8.4",
     "electron-builder": "20.8.1",
     "electron-reload": "1.2.2",
     "fs-extra": "5.0.0",
