@@ -80,14 +80,17 @@
         </div>  
       </div>
 
-      <div class="middle col-md-8 px-0 position-relative">
+      <div class="middle col-md-8 px-0 position-relative" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': '!edge?.bottom', 'left-b': '!edge?.left', 'right-b': '!edge?.right', 'object-add': isSelected }" #board>
         <img id="main-board" src="assets/foot-background.png">
         <div id="camdemo" class="position-absolute d-flex" style="text-align: center; margin: 0 auto;"></div>
         <img id="savefile" class="btn-capture position-absolute" src="assets/btn-camera.png" (click)="captureImage()">
-        <img class="foot-marker position-absolute" src="{{footmarker}}">        
-        <div class="deviation-marker position-absolute"  [hidden]="!isVisibleDeviationMarker">
-          <div class="deviation-pointer"></div>
+
+        <div ngDraggable #block="ngDraggable" class="foot-marker position-absolute" [ngDraggable] = "!isVisibleDeviationMarker" [bounds]="board" [inBounds]="inBounds" [ngStyle]="setFootMarker()" (edge)="checkEdge($event)">
+          <img class="foot-marker " src="{{footmarker}}">
         </div>
+        <div ngDraggable #block="ngDraggable" class="deviation-marker position-absolute" [ngDraggable] = "isVisibleDeviationMarker" [hidden]="!isVisibleDeviationMarker" [bounds]="board" [inBounds]="inBounds" [ngStyle]="setDeviationMarker()" (edge)="checkEdge($event)">
+          <img class="deviation-marker" src="assets/deviation-marker.png">
+        </div> 
       </div>
 
       <div class="right position-relative col-md-2 m-0 p-0">

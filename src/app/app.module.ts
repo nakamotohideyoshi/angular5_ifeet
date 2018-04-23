@@ -20,6 +20,7 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import {WebcamModule} from 'ngx-webcam';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    AngularDraggableModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
