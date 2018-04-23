@@ -8,6 +8,12 @@
   background: url(../../../assets/background.png) no-repeat center fixed;
   -webkit-background-size: cover; /* pour anciens Chrome et Safari */
   background-size: cover; /* version standardisée */
+  canvas {
+    width: 800px;
+    height: 600px;
+    left: 0;
+    top: 0;
+  }
   #camdemo{
     left: 0;
     top: 0;

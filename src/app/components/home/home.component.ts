@@ -5,6 +5,8 @@ declare var toggleCamera: Function;
 declare var captureImage: Function;
 declare var newAnalysis: Function;
 declare var onSelectSnapshot: Function;
+declare var drwaline: Function;
+declare var clearCanvas: Function;
 
 @Component({
   selector: 'app-home',
@@ -48,17 +50,20 @@ export class HomeComponent implements OnInit {
   points = [
     {
       x: 400,
-      y: 20
+      y: 25
     },
     {
       x: 400,
-      y: 580
+      y: 575
     },
     {
       x: 400,
       y: 300
     }
   ];
+  footMarkerPositionX = 400;
+  deviationMarkerPositionX = 400;
+  deviationMarkerPositionY = 300;
 
   constructor( private router: Router) {
     initialize();
@@ -73,6 +78,11 @@ export class HomeComponent implements OnInit {
 
   toggleDeviationMarker() {
     this.isVisibleDeviationMarker = !this.isVisibleDeviationMarker;
+    if (this.isVisibleDeviationMarker) {
+      drwaline(this.points);
+    } else {
+      clearCanvas();
+    }
   }
 
   toggleFootMarker() {
@@ -118,6 +128,47 @@ export class HomeComponent implements OnInit {
 
   checkEdge(event) {
     this.edge = event;
+  }
+
+  onFootMarkerStart(event) {
+    // console.log('started output:', event);
+  }
+
+  onFootMarkerStop(event) {
+    // console.log('stopped output:', event);
+  }
+
+  onFootMarkerMoving(event) {
+    this.points[0].x = this.footMarkerPositionX + event.x;
+    this.points[1].x = this.footMarkerPositionX + event.x;
+    console.log('points: ', this.points);
+  }
+
+  onFootMarkerMoveEnd(event) {
+    // this.points[0].x = this.footMarkerPositionX + event.x;
+    // this.points[1].x = this.footMarkerPositionX + event.x;
+    console.log('end_points: ', this.points);
+  }
+
+  onDeviationMarkerStart(event) {
+    // console.log('started output:', event);
+  }
+
+  onDeviationMarkerStop(event) {
+    // console.log('stopped output:', event);
+  }
+
+  onDeviationMarkerMoving(event) {
+    this.points[2].x = this.deviationMarkerPositionX + event.x;
+    this.points[2].y = this.deviationMarkerPositionY + event.y;
+    console.log('dpoints: ', this.points);
+    drwaline(this.points);
+  }
+
+  onDeviationMarkerMoveEnd(event) {
+    // this.points[2].x = this.deviationMarkerPositionX + event.x;
+    // this.points[2].y = this.deviationMarkerPositionY + event.y;
+    console.log('dend_points: ', this.points);
   }
 
   ngOnInit() {

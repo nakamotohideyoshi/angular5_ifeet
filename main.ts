@@ -21,11 +21,11 @@ function createWindow() {
   win = new BrowserWindow({
     x: 800,
     y: 600,
-    width: 1280,
+    width: 1350,
     height: 960,
-    resizable: true,
+    resizable: false,
     webPreferences: {
-      devTools: true
+      devTools: false
     }
   });
 
