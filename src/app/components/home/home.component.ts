@@ -7,6 +7,7 @@ declare var newAnalysis: Function;
 declare var onSelectSnapshot: Function;
 declare var drwaline: Function;
 declare var clearCanvas: Function;
+declare var exitApp: Function;
 
 @Component({
   selector: 'app-home',
@@ -74,6 +75,10 @@ export class HomeComponent implements OnInit {
       this.snapshots.push(this.DEFAULT_SNAPSHOTS);
     }
 
+  }
+
+  exitApp() {
+    exitApp();
   }
 
   toggleDeviationMarker() {

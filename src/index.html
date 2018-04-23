@@ -23,6 +23,11 @@
     var canvas = null;
     var context = null;
 
+    function exitApp() {
+      var window = remote.getCurrentWindow();
+      window.close();
+    }
+
     function initialize() {
       // if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
       //   console.log("enumerateDevices() not supported.");
