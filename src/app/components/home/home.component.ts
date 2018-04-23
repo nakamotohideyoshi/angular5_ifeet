@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 declare var initialize: Function;
 declare var toggleCamera: Function;
 declare var captureImage: Function;
+declare var newAnalysis: Function;
 
 @Component({
   selector: 'app-home',
@@ -16,11 +18,10 @@ export class HomeComponent implements OnInit {
   DEVIATION_MARKER_WITH_LINE: String = 'assets/foot-marker2.png';
   DEVIATION_MARKER: String = 'assets/foot-marker1.png';
   isCameraProcessing: Boolean = false;
-  snapshotsIndex: any = 0;
   DEFAULT_SNAPSHOTS: String = 'assets/foot-background.png';
   snapshots: any = [];
 
-  constructor() {
+  constructor( private router: Router) {
     initialize();
     this.isVisibleDeviationMarker = false;
     this.isDeviationLine = false;
@@ -45,12 +46,11 @@ export class HomeComponent implements OnInit {
   }
 
   captureImage() {
-    if (this.snapshotsIndex < 6) {
-      if (captureImage(this.snapshotsIndex)) {
-        this.snapshots[this.snapshotsIndex] = 'assets/snapshots/' + this.snapshotsIndex + '.png';
-        this.snapshotsIndex++;
-      }
-    }
+    captureImage();
+  }
+
+  newAnalysis() {
+    newAnalysis();
   }
 
   ngOnInit() {

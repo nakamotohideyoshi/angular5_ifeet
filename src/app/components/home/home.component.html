@@ -16,7 +16,7 @@
           <span class="text-center mb-0 align-middle">Source</span>
         </div>
         <div class="menu d-flex flex-wrap justify-content-around">
-          <img class="menu-img" src="assets/btn-refresh.png">
+          <img class="menu-img" src="assets/btn-refresh.png" (click)="newAnalysis()">
           <span class="text-center mb-0 align-middle">New Analysis</span>
         </div>
       </div>
@@ -53,7 +53,7 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
-              <img class="capture position-absolute" src="{{snapshots[0]}}">
+              <img id="snapshots0" class="capture position-absolute" src="{{snapshots[0]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
             </div>
@@ -62,7 +62,7 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
-              <img class="capture position-absolute" src="{{snapshots[1]}}">
+              <img id="snapshots1" class="capture position-absolute" src="{{snapshots[1]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
             </div>
@@ -71,7 +71,7 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
-              <img class="capture position-absolute" src="{{snapshots[2]}}">
+              <img id="snapshots2" class="capture position-absolute" src="{{snapshots[2]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
             </div>
@@ -96,7 +96,7 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
-              <img class="capture position-absolute" src="{{snapshots[3]}}">
+              <img id="snapshots3" class="capture position-absolute" src="{{snapshots[3]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
               
@@ -106,7 +106,7 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
-              <img class="capture position-absolute" src="{{snapshots[4]}}">
+              <img id="snapshots4" class="capture position-absolute" src="{{snapshots[4]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
             </div>
@@ -115,7 +115,7 @@
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
-              <img class="capture position-absolute" src="{{snapshots[5]}}">
+              <img id="snapshots5" class="capture position-absolute" src="{{snapshots[5]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png">
             </div>
