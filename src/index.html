@@ -30,8 +30,7 @@
       .then(function(devices) {
         devices.forEach(function(device) {
           if(device.kind === 'videoinput') 
-          console.log(device.kind + ": " + device.label +
-                      " id = " + device.deviceId);
+          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
         });
       })
       .catch(function(err) {
@@ -40,23 +39,27 @@
     }
 
     function toggleCamera() {
-      if(!enabled){
-        enabled = true;
-        WebCamera.set({
-          dest_width: 320,
-          dest_height: 240,
-          image_format: 'jpeg',
-          jpeg_quality: 90,
-          force_flash: false,
-          flip_horiz: true,
-          fps: 45
-        });
-        WebCamera.attach('#camdemo');
-        console.log("The camera has been started");
-      }else{
-        enabled = false;
-        WebCamera.reset();
-        console.log("The camera has been disabled");
+      if (index >= 0 && index <= 5) {
+        if(!enabled){
+          enabled = true;
+          WebCamera.set({
+            dest_width: 320,
+            dest_height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            force_flash: false,
+            flip_horiz: true,
+            fps: 45
+          });
+          WebCamera.attach('#camdemo');
+          document.getElementById('savefile').style.display = 'block';
+          console.log("The camera has been started");
+        }else{
+          enabled = false;
+          WebCamera.reset();
+          document.getElementById('savefile').style.display = 'none';
+          console.log("The camera has been disabled");
+        }
       }
     }
 
@@ -73,6 +76,12 @@
       return response;
     }
 
+    function onSelectSnapshot(snapshotIndex) {
+      if (!enabled) {
+        document.getElementById("main-board").src= document.getElementById("snapshots"+snapshotIndex).src;
+      }
+    }
+
     function newAnalysis() {
       console.log('delete');
       var filePath = path.join('snapshots');
@@ -86,48 +95,51 @@
         for (var i=0; i<6; i++) {
           document.getElementById("snapshots"+i).src= 'assets/foot-background.png';
         }
+        document.getElementById("main-board").src = 'assets/foot-background.png';
         index=0;
       }
     }
 
     function captureImage() {
-      if(index>5) return false;
-      console.log(index);
-      if(enabled){
-        WebCamera.snap(function(data_uri) {
-          var imageBuffer = processBase64Image(data_uri);
-          // var fileName = path.join('resources', 'snapshots', index +'.png')
-          // var filePath = path.join('resources', 'snapshots');
-          var fileName = path.join('snapshots', Date.now() + '_' + index +'.png')
-          var filePath = path.join('snapshots');
-          if (!fs.existsSync(filePath)) {
-            console.log('1', __dirname, filePath, fileName);
-            fs.mkdirSync(filePath);
-          }
-
-          if (fs.existsSync(filePath)) {
-            console.log('2', __dirname, filePath, fileName);
-            if (fileName === undefined){
-              console.log("You didn't save the file because you exit or didn't give a name");
-              return false;
+      if (index >= 0 && index <= 5) {
+        if(enabled){
+          WebCamera.snap(function(data_uri) {
+            var imageBuffer = processBase64Image(data_uri);
+            var fileName = path.join('snapshots', Date.now() + '_' + index +'.png')
+            var filePath = path.join('snapshots');
+            if (!fs.existsSync(filePath)) {
+              fs.mkdirSync(filePath);
             }
-            // If the user gave a name to the file, then save it !
-            fs.writeFile(fileName, imageBuffer.data, function(err) {
-              if(err){
-                console.log("Cannot save the file :'( time to cry !");
-                return false;
-              }else{
-                console.log("Image saved succesfully");
-                document.getElementById("snapshots"+index).src= 'file:///'+fileName;
-                index++;
-                return true;
+
+            if (fs.existsSync(filePath)) {
+              console.log('2', __dirname, filePath, fileName);
+              if (fileName === undefined){
+                console.log("You didn't save the file because you exit or didn't give a name");
+                return;
               }
-            });
-          }
-        });
-      } else{
-        console.log("Please enable the camera first to take the snapshot !");
-        return false;
+              // If the user gave a name to the file, then save it !
+              fs.writeFile(fileName, imageBuffer.data, function(err) {
+                if(err){
+                  console.log("Cannot save the file :'( time to cry !");
+                }else{
+                  console.log("Image saved succesfully");
+                  document.getElementById("snapshots"+index).src= 'file:///'+fileName;
+                  index++;
+                  if (index === 6) {
+                    if (enabled) {
+                      enabled = false;
+                      WebCamera.reset();
+                      document.getElementById('savefile').style.display = 'none';
+                      console.log("The camera has been disabled");
+                    }
+                  }
+                }
+              });
+            }
+          });
+        } else{
+          console.log("Please enable the camera first to take the snapshot !");
+        }
       }
     }
 

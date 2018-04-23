@@ -4,6 +4,7 @@ declare var initialize: Function;
 declare var toggleCamera: Function;
 declare var captureImage: Function;
 declare var newAnalysis: Function;
+declare var onSelectSnapshot: Function;
 
 @Component({
   selector: 'app-home',
@@ -51,6 +52,10 @@ export class HomeComponent implements OnInit {
 
   newAnalysis() {
     newAnalysis();
+  }
+
+  onSelectSnapshot(index) {
+    onSelectSnapshot(index);
   }
 
   ngOnInit() {

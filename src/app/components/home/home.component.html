@@ -4,7 +4,7 @@
   </h1> -->
   <div class="container d-flex flex-column p-0 justify-content-around">
 
-    <div class="top d-flex flex-wrap">
+    <div class="top d-flex flex-wrap justify-content-around">
 
       <div class="left col-md-3 d-flex flex-column justify-content-around">
         <div class="menu d-flex flex-wrap justify-content-around">
@@ -55,7 +55,7 @@
             <div class="source mx-auto position-relative">
               <img id="snapshots0" class="capture position-absolute" src="{{snapshots[0]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
-              <img class="frame position-absolute" src="assets/source-background.png">
+              <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(0)">
             </div>
             <span class="mt-1">Back, standing straight</span>
           </div>
@@ -64,7 +64,7 @@
             <div class="source mx-auto position-relative">
               <img id="snapshots1" class="capture position-absolute" src="{{snapshots[1]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
-              <img class="frame position-absolute" src="assets/source-background.png">
+              <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(1)">
             </div>
             <span class="mt-1">Back, Kness Bent 45°</span>
           </div>
@@ -73,7 +73,7 @@
             <div class="source mx-auto position-relative">
               <img id="snapshots2" class="capture position-absolute" src="{{snapshots[2]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
-              <img class="frame position-absolute" src="assets/source-background.png">
+              <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(2)">
             </div>
             <span class="mt-1">Back, raise toes up</span>
           </div>            
@@ -81,7 +81,7 @@
       </div>
 
       <div class="middle col-md-8 px-0 position-relative">
-        <img src="assets/foot-background.png">
+        <img id="main-board" src="assets/foot-background.png">
         <div id="camdemo" class="position-absolute d-flex" style="text-align: center; margin: 0 auto;"></div>
         <img id="savefile" class="btn-capture position-absolute" src="assets/btn-camera.png" (click)="captureImage()">
         <img class="foot-marker position-absolute" src="{{footmarker}}">        
@@ -98,7 +98,7 @@
             <div class="source mx-auto position-relative">
               <img id="snapshots3" class="capture position-absolute" src="{{snapshots[3]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
-              <img class="frame position-absolute" src="assets/source-background.png">
+              <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(3)">
               
             </div>
             <span class="mt-1">Back, standing straight</span>
@@ -108,7 +108,7 @@
             <div class="source mx-auto position-relative">
               <img id="snapshots4" class="capture position-absolute" src="{{snapshots[4]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
-              <img class="frame position-absolute" src="assets/source-background.png">
+              <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(4)">
             </div>
             <span class="mt-1">Back, Kness Bent 45°</span>
           </div>
@@ -117,7 +117,7 @@
             <div class="source mx-auto position-relative">
               <img id="snapshots5" class="capture position-absolute" src="{{snapshots[5]}}">
               <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
-              <img class="frame position-absolute" src="assets/source-background.png">
+              <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(5)">
             </div>
             <span class="mt-1">Back, raise toes up</span>
           </div>            

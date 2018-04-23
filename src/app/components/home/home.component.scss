@@ -44,10 +44,12 @@
 
       .left{
         height: 100%;
+        max-width: 320px;
       }
       
       .middle{
         height: 100%;
+        max-width: 640px;
         .license{
           height: 30%;
         }
@@ -73,6 +75,7 @@
       }
       .right{
         height: 100%;
+        max-width: 320px;
       }
     }
 
@@ -94,6 +97,7 @@
           height: 80px;
           right: 10px;
           top: 10px;
+          display: none;
         }
         .foot-marker{
           width: 20px;
