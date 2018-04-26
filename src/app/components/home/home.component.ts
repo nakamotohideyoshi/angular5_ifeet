@@ -8,6 +8,9 @@ declare var onSelectSnapshot: Function;
 declare var drwaline: Function;
 declare var clearCanvas: Function;
 declare var exitApp: Function;
+declare var toggleDeviationMarker: Function;
+declare var toggleFootMarker: Function;
+declare var setMarkerPosition: Function;
 
 @Component({
   selector: 'app-home',
@@ -16,11 +19,6 @@ declare var exitApp: Function;
 })
 export class HomeComponent implements OnInit {
 
-  isVisibleDeviationMarker: Boolean = false;
-  isDeviationLine: Boolean = false;
-  footmarker: String;
-  DEVIATION_MARKER_WITH_LINE: String = 'assets/foot-marker2.png';
-  DEVIATION_MARKER: String = 'assets/foot-marker1.png';
   isCameraProcessing: Boolean = false;
   DEFAULT_SNAPSHOTS: String = 'assets/foot-background.png';
   snapshots: any = [];
@@ -39,38 +37,9 @@ export class HomeComponent implements OnInit {
     left: true,
     right: true
   };
-  deviation_marker = {
-    x: 360,
-    y: 260
-  };
-  foot_marker = {
-    x: 390,
-    y: 0
-  };
-
-  points = [
-    {
-      x: 400,
-      y: 25
-    },
-    {
-      x: 400,
-      y: 575
-    },
-    {
-      x: 400,
-      y: 300
-    }
-  ];
-  footMarkerPositionX = 400;
-  deviationMarkerPositionX = 400;
-  deviationMarkerPositionY = 300;
 
   constructor( private router: Router) {
     initialize();
-    this.isVisibleDeviationMarker = false;
-    this.isDeviationLine = false;
-    this.footmarker = this.isDeviationLine ? this.DEVIATION_MARKER_WITH_LINE : this.DEVIATION_MARKER;
     for (let i = 0; i < 6; i++) {
       this.snapshots.push(this.DEFAULT_SNAPSHOTS);
     }
@@ -82,17 +51,15 @@ export class HomeComponent implements OnInit {
   }
 
   toggleDeviationMarker() {
-    this.isVisibleDeviationMarker = !this.isVisibleDeviationMarker;
-    if (this.isVisibleDeviationMarker) {
-      drwaline(this.points);
-    } else {
-      clearCanvas();
-    }
+    toggleDeviationMarker();
   }
 
   toggleFootMarker() {
-    this.isDeviationLine = !this.isDeviationLine;
-    this.footmarker = this.isDeviationLine ? this.DEVIATION_MARKER_WITH_LINE : this.DEVIATION_MARKER;
+    toggleFootMarker();
+  }
+
+  setMarkerPosition(event) {
+    setMarkerPosition(event.layerX, event.layerY);
   }
 
   toggleCamera() {
@@ -115,22 +82,6 @@ export class HomeComponent implements OnInit {
     console.log(event);
   }
 
-  setDeviationMarker() {
-    const styles = {
-      'left': this.deviation_marker.x + 'px',
-      'top': this.deviation_marker.y + 'px'
-    };
-    return styles;
-  }
-
-  setFootMarker() {
-    const styles = {
-      'left': this.foot_marker.x + 'px',
-      'top': this.foot_marker.y + 'px'
-    };
-    return styles;
-  }
-
   checkEdge(event) {
     this.edge = event;
   }
@@ -143,16 +94,10 @@ export class HomeComponent implements OnInit {
     // console.log('stopped output:', event);
   }
 
-  onFootMarkerMoving(event) {
-    this.points[0].x = this.footMarkerPositionX + event.x;
-    this.points[1].x = this.footMarkerPositionX + event.x;
-    console.log('points: ', this.points);
-  }
-
   onFootMarkerMoveEnd(event) {
     // this.points[0].x = this.footMarkerPositionX + event.x;
     // this.points[1].x = this.footMarkerPositionX + event.x;
-    console.log('end_points: ', this.points);
+    console.log('end_points: ', event);
   }
 
   onDeviationMarkerStart(event) {
@@ -164,16 +109,11 @@ export class HomeComponent implements OnInit {
   }
 
   onDeviationMarkerMoving(event) {
-    this.points[2].x = this.deviationMarkerPositionX + event.x;
-    this.points[2].y = this.deviationMarkerPositionY + event.y;
-    console.log('dpoints: ', this.points);
-    drwaline(this.points);
+    console.log('dpoints: ', event);
   }
 
   onDeviationMarkerMoveEnd(event) {
-    // this.points[2].x = this.deviationMarkerPositionX + event.x;
-    // this.points[2].y = this.deviationMarkerPositionY + event.y;
-    console.log('dend_points: ', this.points);
+    console.log('dend_points: ', event);
   }
 
   ngOnInit() {

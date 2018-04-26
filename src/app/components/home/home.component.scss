@@ -109,18 +109,15 @@
         .foot-marker{
           width: 20px;
           height: 600px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
+          top: 0;
+          left: calc(50% - 10px);
         }
         .deviation-marker{
           width: 80px;
           height: 80px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
+          top: calc(50% - 40px);
+          left: calc(50% - 40px);
+          display: none;
         }
       }
       .right{

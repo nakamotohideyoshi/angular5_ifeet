@@ -38,7 +38,6 @@
     "@angular/animations": "^5.2.9",
     "angular2-draggable": "^1.3.2",
     "bootstrap": "^4.1.0",
-    "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "webcamjs": "^1.0.25"

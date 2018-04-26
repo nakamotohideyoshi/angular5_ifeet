@@ -22,6 +22,22 @@
     var index = 0;
     var canvas = null;
     var context = null;
+    var isVisibleDeviationLine = false;
+    var activeDeviationMarker = false;
+    var points = [
+      {
+        x: 400,
+        y: 25
+      },
+      {
+        x: 400,
+        y: 575
+      },
+      {
+        x: 400,
+        y: 300
+      }
+    ]
 
     function exitApp() {
       var window = remote.getCurrentWindow();
@@ -43,6 +59,41 @@
       .catch(function(err) {
         console.log(err.name + ": " + err.message);
       });
+    }
+
+    function toggleDeviationMarker () {
+      activeDeviationMarker = !activeDeviationMarker;
+      document.getElementById("btn-deviation").src = activeDeviationMarker ? 'assets/btn-deviation.png' : 'assets/btn-deviation1.png';
+      if (!activeDeviationMarker) {
+        clearCanvas();
+        document.getElementById("deviation-marker").style.display = 'none';
+      }
+    }
+
+    function toggleFootMarker () {
+      isVisibleDeviationLine = !isVisibleDeviationLine;
+      document.getElementById("btn-footer").src = isVisibleDeviationLine ? 'assets/foot-left.png' : 'assets/foot-left1.png';
+      document.getElementById("foot-marker").src = isVisibleDeviationLine ? 'assets/foot-marker1.png' : 'assets/foot-marker.png';
+    }
+
+    function setMarkerPosition (x, y) {
+      if (activeDeviationMarker) {
+        if (x>40 && x<760 && y>40 && y<560) {
+          points[2].x = x;
+          points[2].y = y;
+          document.getElementById("deviation-marker").style.display = 'block';
+          document.getElementById("deviation-marker").style.top = (y-40) + 'px';
+          document.getElementById("deviation-marker").style.left = (x-40) + 'px';
+          drwaline();
+
+        }        
+      } else {
+        if (x>40 && x<760) {
+          points[0].x = x;
+          points[1].x = x;
+          document.getElementById("foot-marker").style.left = (x-10) + 'px'; 
+        }
+      }
     }
 
     function toggleCamera() {
@@ -158,7 +209,7 @@
       document.getElementById('leftdev').innerText = '';      
     }
 
-    function drwaline(points) {
+    function drwaline() {
       console.log('draw');
       clearCanvas();
       context.strokeStyle = '#000000';
@@ -173,6 +224,7 @@
       var x = points[2].x - points[1].x;
       var y = points[1].y - points[2].y;
       var degrees = Math.atan(x/y) * 180 / Math.PI;
+      document.getElementById("deviation-marker").src = (degrees > 10 || degrees < -10) ? 'assets/deviation-marker.png' : 'assets/deviation-marker1.png';
 
       document.getElementById('rightdev').innerText = degrees.toFixed(2) + '°';
       document.getElementById('leftdev').innerText = (-degrees).toFixed(2) + '°';
