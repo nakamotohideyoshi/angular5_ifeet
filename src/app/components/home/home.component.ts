@@ -11,6 +11,8 @@ declare var exitApp: Function;
 declare var toggleDeviationMarker: Function;
 declare var toggleFootMarker: Function;
 declare var setMarkerPosition: Function;
+declare var removeImage: Function;
+declare var toggleGuideLine: Function;
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,6 @@ declare var setMarkerPosition: Function;
 export class HomeComponent implements OnInit {
 
   isCameraProcessing: Boolean = false;
-  DEFAULT_SNAPSHOTS: String = 'assets/foot-background.png';
   snapshots: any = [];
   defaultoffsetx: any = 360;
   defaultoffsety: any = 260;
@@ -40,10 +41,6 @@ export class HomeComponent implements OnInit {
 
   constructor( private router: Router) {
     initialize();
-    for (let i = 0; i < 6; i++) {
-      this.snapshots.push(this.DEFAULT_SNAPSHOTS);
-    }
-
   }
 
   exitApp() {
@@ -56,6 +53,14 @@ export class HomeComponent implements OnInit {
 
   toggleFootMarker() {
     toggleFootMarker();
+  }
+
+  toggleGuideLine() {
+    toggleGuideLine();
+  }
+
+  removeImage() {
+    removeImage();
   }
 
   setMarkerPosition(event) {

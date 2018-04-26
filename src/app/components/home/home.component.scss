@@ -99,6 +99,50 @@
           width: 800px;
           height: 600px;
         }
+        .guideline-right{
+          display: none;
+          width: 20px;
+          height: 600px;
+          right: 0;
+          top: 0;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .guideline-left{
+          display: none;
+          width: 20px;
+          height: 600px;
+          left: 0;
+          top: 0;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .guideline-top{
+          display: none;
+          width: 800px;
+          height: 20px;
+          left: 0;
+          top: 0;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .guideline-bottom{
+          display: none;
+          width: 800px;
+          height: 20px;
+          left: 0;
+          bottom: 0;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
         .btn-capture{
           width: 80px;
           height: 80px;
@@ -118,6 +162,42 @@
           top: calc(50% - 40px);
           left: calc(50% - 40px);
           display: none;
+        }
+        .remove {
+          width: 70px;
+          height: 70px;
+          right: 0;
+          top: calc(50% - 35px);
+          display: none;
+        }
+        .valid{
+          width: 70px;
+          height: 70px;
+          bottom: 0;
+          left: 0;
+          display: none;
+        }
+        .num{
+          width: 70px;
+          height: 70px;
+          bottom: 0;
+          right: 0;
+          display: none;
+        }
+        .alert-message {
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-color: #000;
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          span{
+            color: #fff;
+            font-size: 25px;
+            font-weight: 500;
+          }
         }
       }
       .right{

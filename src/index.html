@@ -24,6 +24,8 @@
     var context = null;
     var isVisibleDeviationLine = false;
     var activeDeviationMarker = false;
+    var isVisibleGuideLine = false;
+    var selectedIndex = -1;
     var points = [
       {
         x: 400,
@@ -37,6 +39,23 @@
         x: 400,
         y: 300
       }
+    ]
+    var isPicture = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,      
+    ];
+
+    var fileNames = [
+      '',
+      '',
+      '',
+      '',
+      '',
+      ''
     ]
 
     function exitApp() {
@@ -67,6 +86,7 @@
       if (!activeDeviationMarker) {
         clearCanvas();
         document.getElementById("deviation-marker").style.display = 'none';
+        document.getElementById('valid').style.display = 'none';
       }
     }
 
@@ -74,6 +94,23 @@
       isVisibleDeviationLine = !isVisibleDeviationLine;
       document.getElementById("btn-footer").src = isVisibleDeviationLine ? 'assets/foot-left.png' : 'assets/foot-left1.png';
       document.getElementById("foot-marker").src = isVisibleDeviationLine ? 'assets/foot-marker1.png' : 'assets/foot-marker.png';
+    }
+
+    function toggleGuideLine () {
+      isVisibleGuideLine = !isVisibleGuideLine;
+      if (isVisibleGuideLine) {
+        document.getElementById('btn-guideline').src = 'assets/btn-guideline.png';
+        document.getElementById('t-line').style.display = 'block';
+        document.getElementById('b-line').style.display = 'block';
+        document.getElementById('l-line').style.display = 'block';
+        document.getElementById('r-line').style.display = 'block';
+      } else {
+        document.getElementById('btn-guideline').src = 'assets/btn-guideline1.png';
+        document.getElementById('t-line').style.display = 'none';
+        document.getElementById('b-line').style.display = 'none';
+        document.getElementById('l-line').style.display = 'none';
+        document.getElementById('r-line').style.display = 'none';
+      }
     }
 
     function setMarkerPosition (x, y) {
@@ -111,11 +148,14 @@
           });
           WebCamera.attach('#camdemo');
           document.getElementById('savefile').style.display = 'block';
+          document.getElementById('num').style.display = 'flex';
+          document.getElementById('num').src = 'assets/num' + index + '.png'
           console.log("The camera has been started");
         }else{
           enabled = false;
           WebCamera.reset();
           document.getElementById('savefile').style.display = 'none';
+          document.getElementById('num').style.display = 'none';
           console.log("The camera has been disabled");
         }
       }
@@ -136,8 +176,27 @@
 
     function onSelectSnapshot(snapshotIndex) {
       if (!enabled) {
+        document.getElementById('alert-message').style.display = 'none';
         document.getElementById("main-board").src= document.getElementById("snapshots"+snapshotIndex).src;
+        document.getElementById('num').style.display = 'flex';
+        document.getElementById('num').src = 'assets/num' + snapshotIndex + '.png'
+        document.getElementById('remove').style.display = isPicture[snapshotIndex] ? 'block' : 'none';
+        selectedIndex = isPicture[snapshotIndex] ? snapshotIndex : -1;
       }
+    }
+
+    function removeImage() {
+      var filePath = path.join('snapshots');
+      var fileName = fileNames[selectedIndex];
+      if (fs.existsSync(filePath)) {
+        fs.unlink(fileName, function(err) {
+          if (err) console.log(err);
+          fileNames[selectedIndex] = '';
+          isPicture[selectedIndex] = false;
+          document.getElementById("snapshots"+selectedIndex).src = 'assets/foot-background.png';
+          onSelectSnapshot(selectedIndex);
+        });
+      };
     }
 
     function newAnalysis() {
@@ -181,13 +240,16 @@
                   console.log("Cannot save the file :'( time to cry !");
                 }else{
                   console.log("Image saved succesfully");
+                  fileNames[index] = fileName;
                   document.getElementById("snapshots"+index).src= 'file:///'+fileName;
+                  isPicture[index] = true;
                   index++;
                   if (index === 6) {
                     if (enabled) {
                       enabled = false;
                       WebCamera.reset();
                       document.getElementById('savefile').style.display = 'none';
+                      document.getElementById('alert-message').style.display = 'flex';
                       console.log("The camera has been disabled");
                     }
                   }
@@ -210,7 +272,6 @@
     }
 
     function drwaline() {
-      console.log('draw');
       clearCanvas();
       context.strokeStyle = '#000000';
       // context.lineWidth = 1;
@@ -224,7 +285,9 @@
       var x = points[2].x - points[1].x;
       var y = points[1].y - points[2].y;
       var degrees = Math.atan(x/y) * 180 / Math.PI;
-      document.getElementById("deviation-marker").src = (degrees > 10 || degrees < -10) ? 'assets/deviation-marker.png' : 'assets/deviation-marker1.png';
+      document.getElementById('valid').style.display = 'block';
+      document.getElementById('deviation-marker').src = (degrees > 10 || degrees < -10) ? 'assets/deviation-marker.png' : 'assets/deviation-marker1.png';
+      document.getElementById('valid').src = (degrees > 10 || degrees < -10) ? 'assets/invalid.png' : 'assets/valid.png';
 
       document.getElementById('rightdev').innerText = degrees.toFixed(2) + '°';
       document.getElementById('leftdev').innerText = (-degrees).toFixed(2) + '°';
