@@ -85,16 +85,16 @@
         <img id="main-board" src="assets/foot-background.png">
         <div id="camdemo" class="position-absolute d-flex" style="text-align: center; margin: 0 auto;"></div>
         <canvas id="line-board" class="position-absolute" width="800" height="600" (click)="setMarkerPosition($event)"></canvas>
-        <div ngDraggable #block="ngDraggable" id="t-line" class="guideline-top position-absolute" [ngDraggable] = "!isVisibleDeviationMarker" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
+        <div ngDraggable #block="ngDraggable" id="t-line" class="guideline-top position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
           <img src="assets/line1.png">
         </div>
-        <div ngDraggable #block="ngDraggable" id="b-line" class="guideline-bottom position-absolute" [ngDraggable] = "!isVisibleDeviationMarker" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
+        <div ngDraggable #block="ngDraggable" id="b-line" class="guideline-bottom position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
           <img src="assets/line1.png">
         </div>
-        <div ngDraggable #block="ngDraggable" id="l-line" class="guideline-left position-absolute" [ngDraggable] = "!isVisibleDeviationMarker" [bounds]="board" [inBounds]="inBounds"  (edge)="checkEdge($event)" [preventDefaultEvent]="true">
+        <div ngDraggable #block="ngDraggable" id="l-line" class="guideline-left position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds"  (edge)="checkEdge($event)" [preventDefaultEvent]="true">
           <img src="assets/line2.png">
         </div>
-        <div ngDraggable #block="ngDraggable" id="r-line" class="guideline-right position-absolute" [ngDraggable] = "!isVisibleDeviationMarker" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
+        <div ngDraggable #block="ngDraggable" id="r-line" class="guideline-right position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
           <img src="assets/line2.png">
         </div>
         <img id="savefile" class="btn-capture position-absolute" src="assets/btn-camera.png" (click)="captureImage()">

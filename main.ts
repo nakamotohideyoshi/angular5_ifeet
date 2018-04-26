@@ -23,7 +23,7 @@ function createWindow() {
     y: 600,
     width: 1350,
     height: 960,
-    resizable: false,
+    resizable: true,
     webPreferences: {
       devTools: false
     }

@@ -211,9 +211,11 @@
         });
         for (var i=0; i<6; i++) {
           document.getElementById("snapshots"+i).src= 'assets/foot-background.png';
+          isPicture[i] = false;
+          fileNames[i] = '';
         }
-        document.getElementById("main-board").src = 'assets/foot-background.png';
         index=0;
+        onSelectSnapshot(index);
       }
     }
 
