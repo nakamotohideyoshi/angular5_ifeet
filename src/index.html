@@ -14,11 +14,16 @@
 
     var enabled = false;
     var WebCamera = require("webcamjs");
-    var remote = require('electron').remote; // Load remote component that contains the dialog dependency
+    var electron = require('electron');
+    var remote = electron.remote; // Load remote component that contains the dialog dependency
     var dialog = remote.dialog; // Load the dialogs component of the OS
     var fs = require('fs'); // Load the File System to execute our common tasks (CRUD)
     var existsSync = fs.existsSync;
     var path = require('path');
+    const drivelist = require('drivelist');
+    var md5 = require('js-md5');
+    var storage = require('electron-json-storage');
+    var key = [];
     var index = 0;
     var canvas = null;
     var context = null;
@@ -26,18 +31,20 @@
     var activeDeviationMarker = false;
     var isVisibleGuideLine = false;
     var selectedIndex = -1;
+    var userDataPath = (electron.app || remote.app).getPath('userData');
+
     var points = [
       {
-        x: 400,
-        y: 25
+        x: 320,
+        y: 0
       },
       {
-        x: 400,
-        y: 575
+        x: 320,
+        y: 480
       },
       {
-        x: 400,
-        y: 300
+        x: 320,
+        y: 240
       }
     ]
     var isPicture = [
@@ -57,28 +64,111 @@
       '',
       ''
     ]
+    // Click Exit icon, so app will be Quit.
 
     function exitApp() {
       var window = remote.getCurrentWindow();
       window.close();
     }
 
+    function checkCredential() {
+
+      // localStorage
+
+      console.log('localstorage:', localStorage.getItem('active'));
+      if (localStorage.getItem('active')) {
+        document.getElementById('password-form').style.display = 'none';
+        document.getElementById('main-container').style.display = 'flex';
+      }
+
+
+      // // JSON storage.
+      // storage.get('activater', function(error, object) {
+      //   if (error) throw error;
+      //   console.log('storage: ', object.active);
+      //   if (object.active) {
+      //     document.getElementById('password-form').style.display = 'none';
+      //     document.getElementById('main-container').style.display = 'flex';
+      //   }
+      // })
+      
+      // File
+      // var userDataPath = (electron.app || remote.app).getPath('userData');      
+      // if (fs.existsSync(path.join(userDataPath, 'ifeet.log'))) {
+      //   console.log('credential File:', 'ifeet.log');
+      //   document.getElementById('password-form').style.display = 'none';
+      //   document.getElementById('main-container').style.display = 'flex';
+      // }
+    }
+
+    // Login Function
+
+    function login(password) {
+
+      if (key.indexOf(password) > -1) {
+        document.getElementById('password-form').style.display = 'none';
+        document.getElementById('main-container').style.display = 'flex';
+        
+        // localStorage
+        localStorage.setItem('active', true);
+
+
+        // Storage
+        // storage.set('activater', {active: true}, function(error) {
+        //   if (error) throw error;
+        // });
+
+        // File
+        // fs.closeSync(fs.openSync(path.join(userDataPath, 'ifeet.log'), 'w'));
+        
+        
+      } else {
+
+        localStorage.setItem('active', false);
+
+        // storage.set('activater', {active: false}, function (error) {
+        //   if (error) throw error;
+        // });
+        
+        alert ('Password not correct');
+      }
+    }
+
+    // initialization function
+
     function initialize() {
+      
+      drivelist.list((error, drives) =>  {
+        if(error){
+          throw error;
+        }
+
+        // Read hard Drive Information
+
+        if (drives.length > 0) {
+          document.getElementById('key').value = drives[0].description.length + drives[0].description + Date.now();
+          console.log(drives[0].description.length + drives[0].description + Date.now());
+          key.push(md5(drives[0].description));          
+        }
+      })
+
       // if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
       //   console.log("enumerateDevices() not supported.");
       // }
 
-      navigator.mediaDevices.enumerateDevices()
-      .then(function(devices) {
-        devices.forEach(function(device) {
-          if(device.kind === 'videoinput') 
-          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
-        });
-      })
-      .catch(function(err) {
-        console.log(err.name + ": " + err.message);
-      });
+      // navigator.mediaDevices.enumerateDevices()
+      // .then(function(devices) {
+      //   devices.forEach(function(device) {
+      //     if(device.kind === 'videoinput') 
+      //     console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+      //   });
+      // })
+      // .catch(function(err) {
+      //   console.log(err.name + ": " + err.message);
+      // });
     }
+
+    // Deviation Marker hide/show
 
     function toggleDeviationMarker () {
       activeDeviationMarker = !activeDeviationMarker;
@@ -90,54 +180,66 @@
       }
     }
 
+    // FootMarker hide/show
+
     function toggleFootMarker () {
       isVisibleDeviationLine = !isVisibleDeviationLine;
       document.getElementById("btn-footer").src = isVisibleDeviationLine ? 'assets/foot-left.png' : 'assets/foot-left1.png';
-      document.getElementById("foot-marker").src = isVisibleDeviationLine ? 'assets/foot-marker1.png' : 'assets/foot-marker.png';
+      document.getElementById("foot-marker").style.display = isVisibleDeviationLine ? 'block' : 'none';
     }
+
+    // GuideLine hide/show
 
     function toggleGuideLine () {
       isVisibleGuideLine = !isVisibleGuideLine;
       if (isVisibleGuideLine) {
         document.getElementById('btn-guideline').src = 'assets/btn-guideline.png';
-        document.getElementById('t-line').style.display = 'block';
-        document.getElementById('b-line').style.display = 'block';
-        document.getElementById('l-line').style.display = 'block';
-        document.getElementById('r-line').style.display = 'block';
+        document.getElementById('guideline-1').style.display = 'block';
+        document.getElementById('guideline-2').style.display = 'block';
+        document.getElementById('guideline-3').style.display = 'block';
+        document.getElementById('guideline-4').style.display = 'block';
       } else {
         document.getElementById('btn-guideline').src = 'assets/btn-guideline1.png';
-        document.getElementById('t-line').style.display = 'none';
-        document.getElementById('b-line').style.display = 'none';
-        document.getElementById('l-line').style.display = 'none';
-        document.getElementById('r-line').style.display = 'none';
+        document.getElementById('guideline-1').style.display = 'none';
+        document.getElementById('guideline-2').style.display = 'none';
+        document.getElementById('guideline-3').style.display = 'none';
+        document.getElementById('guideline-4').style.display = 'none';
       }
     }
 
+
+    // Set Marker postion, if diviation marker, draw line.
     function setMarkerPosition (x, y) {
       if (activeDeviationMarker) {
-        if (x>40 && x<760 && y>40 && y<560) {
+        if (x>30 && x<610 && y>30 && y<450) {
           points[2].x = x;
           points[2].y = y;
           document.getElementById("deviation-marker").style.display = 'block';
-          document.getElementById("deviation-marker").style.top = (y-40) + 'px';
-          document.getElementById("deviation-marker").style.left = (x-40) + 'px';
+          document.getElementById("deviation-marker").style.top = (y-30) + 'px';
+          document.getElementById("deviation-marker").style.left = (x-30) + 'px';
           drwaline();
 
         }        
       } else {
-        if (x>40 && x<760) {
+        if (x>30 && x<610) {
           points[0].x = x;
           points[1].x = x;
-          document.getElementById("foot-marker").style.left = (x-10) + 'px'; 
+          document.getElementById("foot-marker").style.left = (x-8) + 'px';
+          document.getElementById("foot-marker1").style.left = (x-20) + 'px';
+          document.getElementById("foot-marker2").style.left = (x-20) + 'px';  
         }
       }
     }
+
+    // camera hide/show
 
     function toggleCamera() {
       if (index >= 0 && index <= 5) {
         if(!enabled){
           enabled = true;
           WebCamera.set({
+            width: 640,
+		        height: 480,
             dest_width: 320,
             dest_height: 240,
             image_format: 'jpeg',
@@ -146,6 +248,7 @@
             flip_horiz: true,
             fps: 45
           });
+
           WebCamera.attach('#camdemo');
           document.getElementById('savefile').style.display = 'block';
           document.getElementById('num').style.display = 'flex';
@@ -200,7 +303,7 @@
     }
 
     function newAnalysis() {
-      console.log('delete');
+
       var filePath = path.join('snapshots');
       if (fs.existsSync(filePath)) {
         fs.readdirSync(filePath).forEach(function(file) {
@@ -268,7 +371,7 @@
     function clearCanvas() {
       canvas = document.getElementById('line-board');
       context = canvas.getContext('2d');
-      context.clearRect(0, 0, 800, 600);
+      context.clearRect(0, 0, 640, 480);
       document.getElementById('rightdev').innerText ='';
       document.getElementById('leftdev').innerText = '';      
     }
