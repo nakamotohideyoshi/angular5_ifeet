@@ -13,6 +13,8 @@ declare var toggleFootMarker: Function;
 declare var setMarkerPosition: Function;
 declare var removeImage: Function;
 declare var toggleGuideLine: Function;
+declare var login: Function;
+declare var checkCredential: Function;
 
 @Component({
   selector: 'app-home',
@@ -22,13 +24,6 @@ declare var toggleGuideLine: Function;
 export class HomeComponent implements OnInit {
 
   isCameraProcessing: Boolean = false;
-  snapshots: any = [];
-  defaultoffsetx: any = 360;
-  defaultoffsety: any = 260;
-  offsetx: any = 0;
-  offsety: any = 0;
-  screenx: any = 0;
-  screeny: any = 0;
   draggable = true;
   inBounds = true;
   isSelected: Boolean = false;
@@ -38,9 +33,17 @@ export class HomeComponent implements OnInit {
     left: true,
     right: true
   };
+  password: String = '';
+  isPass: Boolean = false;
+  dateNow: Date = new Date();
+  key: any[] = [this.dateNow.getFullYear() + '-' + (this.dateNow.getMonth() + 1) + '-' + this.dateNow.getDate()];
 
   constructor( private router: Router) {
     initialize();
+  }
+
+  login() {
+    login(this.password);
   }
 
   exitApp() {
@@ -122,6 +125,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    checkCredential();
   }
 
 }

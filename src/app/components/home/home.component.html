@@ -1,12 +1,23 @@
-<div class="container-fluid">
+<div class="container-fluid d-flex justify-content-center align-items-center align-self-center">
   <!-- <h1 class="title">
     {{ 'PAGES.HOME.TITLE' | translate }}
   </h1> -->
-  <div class="container d-flex flex-column p-0 justify-content-around">
+  <form id="password-form" class="flex-column justify-content-center">
+    <div class="form-group">
+      <label for="key">Key:</label>
+      <input id="key" type="text" class="form-control" name="key" placeholder="Key Generator" disabled>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" [(ngModel)]="password" name="password">
+    </div>
+    <button type="Button" class="btn btn-primary" (click)="login()">Login</button>
+  </form>
+  <div id="main-container" class="container flex-column p-0 m-0 justify-content-around">
 
-    <div class="top d-flex flex-wrap justify-content-around">
+    <div class="top d-flex flex-wrap justify-content-around my-4">
 
-      <div class="left col-md-3 d-flex flex-column justify-content-around">
+      <div class="left col-3 d-flex flex-column justify-content-around">
         <div class="menu d-flex flex-wrap justify-content-around">
           <img class="menu-img" src="assets/btn-exit.png" (click)="exitApp()">
           <span class="text-center mb-0 align-middle">Exit</span>
@@ -21,22 +32,28 @@
         </div>
       </div>
 
-      <div class="middle col-md-6">
+      <div class="middle col-6">
         <div class="license"></div>
         <div class="deviation-group d-flex flex-wrap justify-content-around align-items-center">
-          <div class="deviation d-flex justify-content-start align-items-center">
-            <span class="title">Left Deviation</span>
+          <div class="deviation d-flex justify-content-start align-items-center position-relative">
+            <div id="header-left" class="header position-absolute d-flex justify-content-start align-self-center align-items-center">
+              <span>Left</span>
+            </div>
+            <span class="title">Deviation</span>
             <span class="value" id="leftdev"></span>
           </div>
-          <div class="deviation d-flex justify-content-start align-items-center">
-            <span class="title">Right Deviation</span>
+          <div class="deviation d-flex justify-content-start align-items-center position-relative">
+            <div id="header-right" class="header position-absolute d-flex justify-content-start align-self-center align-items-center">
+                <span>Right</span>
+              </div>
+            <span class="title">Deviation</span>
             <span class="value" id="rightdev"></span>
           </div>
         </div>
 
       </div>
 
-      <div class="right col-md-3 d-flex flex-column justify-content-around">
+      <div class="right col-3 d-flex flex-column justify-content-around">
         <div class="menu d-flex flex-wrap justify-content-center">
           <img id='btn-deviation' class="menu-img" src="assets/btn-deviation1.png" (click)="toggleDeviationMarker()">
           <img id='btn-footer' class="menu-img" src="assets/foot-left1.png" (click)="toggleFootMarker()">
@@ -46,16 +63,15 @@
 
     </div>
 
-    <div class="bottom d-flex flex-wrap justify-content-around">
+    <div class="bottom d-flex flex-wrap justify-content-around align-items-center">
 
-      <div class="left position-relative col-md-2 m-0 p-0">
+      <div class="left position-relative m-0 p-0">
         <img class="side-background position-absolute" src="assets/background.png">
         <div class="source-group position-absolute d-flex flex-wrap flex-column justify-content-center align-items-center">
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
               <img id="snapshots3" class="capture position-absolute" src="assets/foot-background.png">
-              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(3)">
             </div>
             <span class="mt-1">Back, standing straight</span>
@@ -64,7 +80,6 @@
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
               <img id="snapshots4" class="capture position-absolute" src="assets/foot-background.png">
-              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(4)">
             </div>
             <span class="mt-1">Back, Kness Bent 45°</span>
@@ -73,7 +88,6 @@
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
               <img id="snapshots5" class="capture position-absolute" src="assets/foot-background.png">
-              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(5)">
             </div>
             <span class="mt-1">Back, raise toes up</span>
@@ -81,25 +95,23 @@
         </div>  
       </div>
 
-      <div class="middle col-md-8 px-0 position-relative" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': '!edge?.bottom', 'left-b': '!edge?.left', 'right-b': '!edge?.right', 'object-add': isSelected }" #board>
+      <div class="middle px-0 position-relative" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': '!edge?.bottom', 'left-b': '!edge?.left', 'right-b': '!edge?.right', 'object-add': isSelected }" #board>
         <img id="main-board" src="assets/foot-background.png">
         <div id="camdemo" class="position-absolute d-flex" style="text-align: center; margin: 0 auto;"></div>
-        <canvas id="line-board" class="position-absolute" width="800" height="600" (click)="setMarkerPosition($event)"></canvas>
-        <div ngDraggable #block="ngDraggable" id="t-line" class="guideline-top position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
-          <img src="assets/line1.png">
+        <img id="foot-marker" class="foot-marker position-absolute" src="assets/line2.png">
+        <img id="foot-marker1" class="position-absolute" src="assets/foot-left.png">
+        <img id="foot-marker2" class="position-absolute" src="assets/foot-left.png">
+        <img id="deviation-marker" class="deviation-marker position-absolute" src="assets/deviation-marker.png">        
+        <canvas id="line-board" class="position-absolute" width="640" height="480" (click)="setMarkerPosition($event)"></canvas>
+        <div ngDraggable #block="ngDraggable" id="guideline-1" class="guideline position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
         </div>
-        <div ngDraggable #block="ngDraggable" id="b-line" class="guideline-bottom position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
-          <img src="assets/line1.png">
+        <div ngDraggable #block="ngDraggable" id="guideline-2" class="guideline position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
         </div>
-        <div ngDraggable #block="ngDraggable" id="l-line" class="guideline-left position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds"  (edge)="checkEdge($event)" [preventDefaultEvent]="true">
-          <img src="assets/line2.png">
+        <div ngDraggable #block="ngDraggable" id="guideline-3" class="guideline position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds"  (edge)="checkEdge($event)" [preventDefaultEvent]="true">
         </div>
-        <div ngDraggable #block="ngDraggable" id="r-line" class="guideline-right position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
-          <img src="assets/line2.png">
+        <div ngDraggable #block="ngDraggable" id="guideline-4" class="guideline position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
         </div>
-        <img id="savefile" class="btn-capture position-absolute" src="assets/btn-camera.png" (click)="captureImage()">
-        <img id="foot-marker" class="foot-marker position-absolute" src="assets/foot-marker.png">
-        <img id="deviation-marker" class="deviation-marker position-absolute" src="assets/deviation-marker.png">
+        <img id="savefile" class="btn-capture position-absolute" src="assets/btn-camera.png" (click)="captureImage()">        
         <img id="remove" class="remove position-absolute" src="assets/btn-remove.png" (click) = "removeImage()">
         <img id="num" class="num position-absolute" src="assets/num0.png">
         <img id="valid" class="valid position-absolute" src="assets/invalid.png">
@@ -109,14 +121,13 @@
         </div>        
       </div>
 
-      <div class="right position-relative col-md-2 m-0 p-0">
+      <div class="right position-relative m-0 p-0">
         <img class="side-background position-absolute" src="assets/background.png">
         <div class="source-group position-absolute d-flex flex-wrap flex-column justify-content-center align-items-center">
 
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
               <img id="snapshots0" class="capture position-absolute" src="assets/foot-background.png">
-              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(0)">
               
             </div>
@@ -126,7 +137,6 @@
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
               <img id="snapshots1" class="capture position-absolute" src="assets/foot-background.png">
-              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(1)">
             </div>
             <span class="mt-1">Back, Kness Bent 45°</span>
@@ -135,7 +145,6 @@
           <div class="source-wrapper d-flex flex-column align-items-center">
             <div class="source mx-auto position-relative">
               <img id="snapshots2" class="capture position-absolute" src="assets/foot-background.png">
-              <!-- <div id="camdemo" class="position-absolute" style="text-align: center; margin: 0 auto;"></div> -->
               <img class="frame position-absolute" src="assets/source-background.png" (click)="onSelectSnapshot(2)">
             </div>
             <span class="mt-1">Back, raise toes up</span>
