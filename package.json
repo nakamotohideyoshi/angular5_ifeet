@@ -4,8 +4,8 @@
   "description": "iFeet using Angular 5 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/nakamotohideyoshi/angular5_ifeet",
   "author": {
-    "name": "Nakamoto Hideyoshi",
-    "email": "nakamoto.guru.0991@gmail.com"
+    "name": "comFeet",
+    "email": ""
   },
   "keywords": [
     "angular",
@@ -38,7 +38,10 @@
     "@angular/animations": "^5.2.9",
     "angular2-draggable": "^1.3.2",
     "bootstrap": "^4.1.0",
+    "drivelist": "^6.1.8",
+    "electron-json-storage": "^4.1.0",
     "jquery": "^3.3.1",
+    "js-md5": "^0.7.3",
     "popper.js": "^1.14.3",
     "webcamjs": "^1.0.25"
   },
