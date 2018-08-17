@@ -19,14 +19,13 @@ function createWindow() {
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 800,
-    y: 600,
-    width: 1350,
-    height: 960,
+    width: size.width,
+    height: size.height,
     resizable: true,
     webPreferences: {
-      devTools: false
-    }
+      devTools: true
+    },
+    icon: path.join(__dirname, 'dist/assets/foot-left.png')
   });
 
   if (serve) {

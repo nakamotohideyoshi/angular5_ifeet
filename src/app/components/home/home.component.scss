@@ -16,8 +16,8 @@
   }
 
   canvas {
-    width: 640px;
-    height: 480px;
+    width: 100%;
+    height: 100%;
     left: 0;
     top: 0;
   }
@@ -45,7 +45,7 @@
     max-width: 1100px;
     height: 100%;
     min-height: 660px;
-    max-height: 900px;
+    max-height: 800px;
 
     .top{
       width: 100%;
@@ -128,18 +128,18 @@
       min-height: 520px;
       .left{
         width: 17%;
-        height: 90%;        
+        height: 95%;        
       }
 
       .middle{
-        width: 58%;
-        height: 480px;
+        width: 642px;
+        height: 482px;
         border: solid 1px rgba(11, 59, 81, 0.26);
         cursor: crosshair;
 
         img {
-          width: 640px;
-          height: 480px;
+          width: 100%;
+          height: 100%;
         }
 
         .guideline{
@@ -174,28 +174,30 @@
         .foot-marker{
           display: none;
           width: 16px;
-          height: 480px;
-          top: 0;
-          left: calc(50% - 8px);
+          height: 100%;
+          // top: 0;
+          // left: calc(50% - 8px);
         }
         #foot-marker1, #foot-marker2 {
           width: 40px;
           height: 40px;
         }
         #foot-marker1 {
-          top: -20px;
-          left: 300px;
+          display: none;
+          // top: -20px;
+          // left: 300px;
         }
         #foot-marker2 {
-          bottom: -20px;
-          left: 300px;
+          display: none;
+          // bottom: -20px;
+          // left: 300px;
         }
 
         .deviation-marker{
           width: 60px;
           height: 60px;
-          top: calc(50% - 30px);
-          left: calc(50% - 30px);
+          // top: calc(50% - 30px);
+          // left: calc(50% - 30px);
           display: none;
         }
 
@@ -203,7 +205,7 @@
           width: 50px;
           height: 50px;
           right: 0;
-          top: calc(50% - 25px);
+          // top: calc(50% - 25px);
           display: none;
           cursor: pointer;
         }
@@ -246,7 +248,7 @@
       }
       .right{
         width: 17%;
-        height: 90%;
+        height: 95%;
       }
     }
 
@@ -282,4 +284,106 @@
     }
   }
 
+}
+
+@media all and (min-width: 1440px) and (min-height: 900px) {
+  .container-fluid {
+    .container {
+      min-width: 1380px;
+      max-width: 1380px;
+      max-height: 850px;
+      .top {
+        height: 17%;
+        .menu {
+          img {
+            width: 40px;
+            height: 40px;
+          }
+          span {
+            font-size: 24px;
+          }
+        }
+      }
+      
+      .bottom {
+        height: 75%;
+        .left, .right {
+          height: 100%;
+        }
+        .middle {
+          width: 802px;
+          height: 602px;
+
+          .btn-capture,          
+          .remove,
+          .valid,
+          .num
+          {
+            width: 70px;
+            height: 70px;
+          }
+
+          .deviation-marker {
+            width: 80px;
+            height: 80px;
+          }
+        }
+       
+
+      }
+
+      .source-wrapper{
+        width: 200px;
+        height: 200px;
+        span {
+          font-size: 18px;
+        }
+      }
+  
+      .source{
+        width: 200px;
+        height: 150px;
+      }
+    }
+  }
+}
+
+
+@media all and (min-width: 1600px) and (min-height: 1024px) {
+  .container-fluid {
+    .container {
+      min-width: 1620px;
+      max-width: 1620px;
+      max-height: 920px;
+      .top {
+        height: 17%;
+        .menu {
+          img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+      
+      .bottom {
+        height: 75%;
+        .left, .right {
+          height: 100%;
+        }
+      }
+
+      .source-wrapper{
+        width: 220px;
+        height: 210px;
+        span {
+          font-size: 20px;
+        }
+      }
+  
+      .source{
+        width: 220px;
+        height: 165px;
+      }
+    }
+  }
 }

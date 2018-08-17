@@ -2,10 +2,8 @@
   "name": "ifeet",
   "version": "1.0.0",
   "description": "iFeet using Angular 5 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/nakamotohideyoshi/angular5_ifeet",
   "author": {
-    "name": "comFeet",
-    "email": ""
+    "name": "comFeet"
   },
   "keywords": [
     "angular",

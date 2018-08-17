@@ -15,6 +15,8 @@ declare var removeImage: Function;
 declare var toggleGuideLine: Function;
 declare var login: Function;
 declare var checkCredential: Function;
+declare var saveAnalysis: Function;
+declare var loadAnalysis: Function;
 
 @Component({
   selector: 'app-home',
@@ -39,7 +41,6 @@ export class HomeComponent implements OnInit {
   key: any[] = [this.dateNow.getFullYear() + '-' + (this.dateNow.getMonth() + 1) + '-' + this.dateNow.getDate()];
 
   constructor( private router: Router) {
-    initialize();
   }
 
   login() {
@@ -48,6 +49,14 @@ export class HomeComponent implements OnInit {
 
   exitApp() {
     exitApp();
+  }
+
+  saveAnalysis() {
+    saveAnalysis();
+  }
+
+  loadAnalysis() {
+    loadAnalysis();
   }
 
   toggleDeviationMarker() {
@@ -80,6 +89,7 @@ export class HomeComponent implements OnInit {
 
   newAnalysis() {
     newAnalysis();
+    // loadAnalysis();
   }
 
   onSelectSnapshot(index) {
@@ -127,5 +137,4 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     checkCredential();
   }
-
 }

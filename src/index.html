@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>AngularElectron</title>
+  <title>Comfeet</title>
   <base href="">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body>
+<body onload="initialize()" onresize="resize()">
   <app-root>Loading...</app-root>
   <script>
 
@@ -32,6 +32,20 @@
     var isVisibleGuideLine = false;
     var selectedIndex = -1;
     var userDataPath = (electron.app || remote.app).getPath('userData');
+    var screenSize = [
+      {
+        x: 640,
+        y: 480
+      },
+      {
+        x: 800,
+        y: 600
+      }
+    ]
+
+    var isLargeScreen = false;
+
+    var iconSize = [60, 80]
 
     var points = [
       {
@@ -64,6 +78,8 @@
       '',
       ''
     ]
+
+    var count = 0;
     // Click Exit icon, so app will be Quit.
 
     function exitApp() {
@@ -124,13 +140,65 @@
         
       } else {
 
-        localStorage.setItem('active', false);
+        // localStorage.setItem('active', false);
 
         // storage.set('activater', {active: false}, function (error) {
         //   if (error) throw error;
         // });
         
         alert ('Password not correct');
+      }
+    }
+
+    function resize() {
+      if (window.innerWidth >= 1440 && window.innerHeight >= 900 && !isLargeScreen) {
+
+        var footMarker1 = Math.floor(parseInt(document.getElementById('foot-marker1').style.left, 10) * 1.25)
+        document.getElementById('foot-marker1').style.left = footMarker1 + 'px';
+        document.getElementById('foot-marker2').style.left = footMarker1 + 'px';
+
+        var footMarker = Math.floor(parseInt(document.getElementById('foot-marker').style.left, 10) * 1.25)
+        document.getElementById('foot-marker').style.left = footMarker + 'px';
+
+        var deviationMarkerX =  Math.floor(parseInt(document.getElementById('deviation-marker').style.left, 10) * 1.25);
+        document.getElementById('deviation-marker').style.left = deviationMarkerX + 'px';
+        var deviationMarkerY =  Math.floor(parseInt(document.getElementById('deviation-marker').style.top, 10) * 1.25);
+        document.getElementById('deviation-marker').style.top = deviationMarkerY + 'px';
+
+        var removeY = Math.floor(parseInt(document.getElementById('remove').style.top, 10) * 1.25);
+        document.getElementById('remove').style.top = removeY + 'px';
+
+        for (let i=0; i<3; i++) {
+          points[i].x = Math.floor(1.25 * points[i].x)
+          points[i].y = Math.floor(1.25 * points[i].y)
+        }
+        isLargeScreen = !isLargeScreen;
+      } else if ((window.innerWidth < 1440 || window.innerHeight < 900) && isLargeScreen) {
+
+        var footMarker1 = Math.floor(parseInt(document.getElementById('foot-marker1').style.left, 10) * 0.8)
+        document.getElementById('foot-marker1').style.left = footMarker1 + 'px';
+        document.getElementById('foot-marker2').style.left = footMarker1 + 'px';
+
+        var footMarker = Math.floor(parseInt(document.getElementById('foot-marker').style.left, 10) * 0.8)
+        document.getElementById('foot-marker').style.left = footMarker + 'px';
+
+        var deviationMarkerX =  Math.floor(parseInt(document.getElementById('deviation-marker').style.left, 10) * 0.8);
+        document.getElementById('deviation-marker').style.left = deviationMarkerX + 'px';
+        var deviationMarkerY =  Math.floor(parseInt(document.getElementById('deviation-marker').style.top, 10) * 0.8);
+        document.getElementById('deviation-marker').style.top = deviationMarkerY + 'px';
+
+        var removeY = Math.floor(parseInt(document.getElementById('remove').style.top, 10) * 0.8);
+        document.getElementById('remove').style.top = removeY + 'px';
+        
+        for (let i=0; i<3; i++) {
+          points[i].x = Math.floor(0.8 * points[i].x)
+          points[i].y = Math.floor(0.8 * points[i].y)
+        }
+
+        isLargeScreen = !isLargeScreen        
+      }
+      if (document.getElementById('rightdev').innerText.length !== 0) {
+        drwaline();
       }
     }
 
@@ -149,8 +217,47 @@
           document.getElementById('key').value = drives[0].description.length + drives[0].description + Date.now();
           console.log(drives[0].description.length + drives[0].description + Date.now());
           key.push(md5(drives[0].description));          
-        }
+        }      
       })
+
+      if  (window.innerWidth >= 1440 && window.innerHeight >= 900) {
+        isLargeScreen = true
+        points = [
+          {
+            x: 400,
+            y: 0
+          },
+          {
+            x: 400,
+            y: 600
+          },
+          {
+            x: 400,
+            y: 300
+          }
+        ]
+      }
+
+      document.getElementById('foot-marker1').style.top = '-20px';
+      document.getElementById('foot-marker2').style.bottom = '-20px';
+      document.getElementById('foot-marker1').style.left = (isLargeScreen ? 380 : 300) + 'px';
+      document.getElementById('foot-marker2').style.left = (isLargeScreen ? 380 : 300) + 'px';
+      document.getElementById('foot-marker1').style.display = 'block';
+      document.getElementById('foot-marker2').style.display = 'block';
+      
+      document.getElementById('foot-marker').style.top = '0px';
+      document.getElementById('foot-marker').style.left = (isLargeScreen ? 400-8 : 320-8) + 'px';
+
+      document.getElementById('deviation-marker').style.top = (isLargeScreen ? 300-40 : 240-30) + 'px';
+      document.getElementById('deviation-marker').style.left = (isLargeScreen ? 400-40 : 320-30) + 'px';
+
+      document.getElementById('remove').style.top = (isLargeScreen ? 300-35 : 240-25) + 'px';
+
+      canvas = document.getElementById('line-board');
+      canvas.width = isLargeScreen ? 800 : 640;
+      canvas.height = isLargeScreen ? 600 : 480;
+      context = canvas.getContext('2d');
+
 
       // if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
       //   console.log("enumerateDevices() not supported.");
@@ -211,17 +318,17 @@
     // Set Marker postion, if diviation marker, draw line.
     function setMarkerPosition (x, y) {
       if (activeDeviationMarker) {
-        if (x>30 && x<610 && y>30 && y<450) {
+        if (x>(isLargeScreen ? 40 : 30) && x<(isLargeScreen ? 760 : 610) && y>(isLargeScreen ? 40 : 30) && y<(isLargeScreen ? 560 : 450)) {
           points[2].x = x;
           points[2].y = y;
           document.getElementById("deviation-marker").style.display = 'block';
-          document.getElementById("deviation-marker").style.top = (y-30) + 'px';
-          document.getElementById("deviation-marker").style.left = (x-30) + 'px';
+          document.getElementById("deviation-marker").style.top = (y-(isLargeScreen ? 40 : 30)) + 'px';
+          document.getElementById("deviation-marker").style.left = (x-(isLargeScreen ? 40 : 30)) + 'px';
           drwaline();
 
         }        
       } else {
-        if (x>30 && x<610) {
+        if (x>(isLargeScreen ? 40 : 30) && x<(isLargeScreen ? 760 : 610)) {
           points[0].x = x;
           points[1].x = x;
           document.getElementById("foot-marker").style.left = (x-8) + 'px';
@@ -234,34 +341,31 @@
     // camera hide/show
 
     function toggleCamera() {
-      if (index >= 0 && index <= 5) {
-        if(!enabled){
-          enabled = true;
-          WebCamera.set({
-            width: 640,
-		        height: 480,
-            dest_width: 320,
-            dest_height: 240,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            force_flash: false,
-            flip_horiz: true,
-            fps: 45
-          });
-
-          WebCamera.attach('#camdemo');
-          document.getElementById('savefile').style.display = 'block';
-          document.getElementById('num').style.display = 'flex';
-          document.getElementById('num').src = 'assets/num' + index + '.png'
-          console.log("The camera has been started");
-        }else{
-          enabled = false;
-          WebCamera.reset();
-          document.getElementById('savefile').style.display = 'none';
-          document.getElementById('num').style.display = 'none';
-          console.log("The camera has been disabled");
+      if(!enabled){
+        if (selectedIndex === -1) {
+          selectedIndex = 0;
         }
-      }
+        enabled = true;
+        WebCamera.set({
+          dest_width: 640,
+          dest_height: 480,
+          image_format: 'jpeg',
+          jpeg_quality: 100,
+          fps: 45
+        });
+
+        WebCamera.attach('#camdemo');
+        document.getElementById('savefile').style.display = 'block';
+        document.getElementById('num').style.display = 'flex';
+        document.getElementById('num').src = 'assets/num' + selectedIndex + '.png'
+        console.log("The camera has been started");
+      }else{
+        enabled = false;
+        WebCamera.reset();
+        document.getElementById('savefile').style.display = 'none';
+        document.getElementById('num').style.display = 'none';
+        console.log("The camera has been disabled");
+      }      
     }
 
     function processBase64Image(dataString) {
@@ -278,14 +382,50 @@
     }
 
     function onSelectSnapshot(snapshotIndex) {
-      if (!enabled) {
-        document.getElementById('alert-message').style.display = 'none';
-        document.getElementById("main-board").src= document.getElementById("snapshots"+snapshotIndex).src;
-        document.getElementById('num').style.display = 'flex';
-        document.getElementById('num').src = 'assets/num' + snapshotIndex + '.png'
-        document.getElementById('remove').style.display = isPicture[snapshotIndex] ? 'block' : 'none';
-        selectedIndex = isPicture[snapshotIndex] ? snapshotIndex : -1;
+      document.getElementById('alert-message').style.display = 'none';
+      document.getElementById("main-board").src= document.getElementById("snapshots"+snapshotIndex).src;
+      document.getElementById('num').style.display = 'flex';
+      document.getElementById('num').src = 'assets/num' + snapshotIndex + '.png'
+      document.getElementById('remove').style.display = isPicture[snapshotIndex] ? 'block' : 'none';
+      selectedIndex = snapshotIndex;
+      
+    }
+
+    function saveAnalysis() {
+      var save = true;
+      for (var i=0;i<6; i++) {
+        if(!isPicture[i]) {
+          save = false;
+          localStorage.setItem('analysis', false);
+        }
       }
+      if (save){
+        localStorage.setItem('analysis', true);
+        for (var i=0;i<6; i++) {
+          localStorage.setItem('snapshot'+i, fileNames[i]);
+          console.log('snapshot'+i, localStorage.getItem('snapshot'+i));
+        }
+      }      
+    }
+
+    function loadAnalysis() {
+      if (!localStorage.getItem('analysis')) {
+        alert('No data!')
+      } else {
+        document.getElementById('alert-message').style.display = 'none';
+        for (var i=0; i<6; i++) {
+          isPicture[i] = true;
+          fileNames[i] = localStorage.getItem('snapshot'+i);
+          document.getElementById("snapshots"+i).src= 'file:///'+fileNames[i];
+
+        }
+        selectedIndex = 0;
+        document.getElementById("main-board").src= document.getElementById("snapshots"+selectedIndex).src;
+        document.getElementById('num').style.display = 'flex';
+        document.getElementById('num').src = 'assets/num' + selectedIndex + '.png'
+        document.getElementById('remove').style.display = isPicture[selectedIndex] ? 'block' : 'none';
+      }
+      
     }
 
     function removeImage() {
@@ -323,11 +463,16 @@
     }
 
     function captureImage() {
-      if (index >= 0 && index <= 5) {
+      if (selectedIndex==-1) {
+        alert('please select the slot!');
+      } else {     
+      
         if(enabled){
+          var audio = new Audio('assets/click.mp3');
+          audio.play();
           WebCamera.snap(function(data_uri) {
             var imageBuffer = processBase64Image(data_uri);
-            var fileName = path.join('snapshots', Date.now() + '_' + index +'.png')
+            var fileName = path.join('snapshots', Date.now() + '_' + selectedIndex +'.png')
             var filePath = path.join('snapshots');
             if (!fs.existsSync(filePath)) {
               fs.mkdirSync(filePath);
@@ -345,11 +490,22 @@
                   console.log("Cannot save the file :'( time to cry !");
                 }else{
                   console.log("Image saved succesfully");
-                  fileNames[index] = fileName;
-                  document.getElementById("snapshots"+index).src= 'file:///'+fileName;
-                  isPicture[index] = true;
-                  index++;
-                  if (index === 6) {
+                  count++;
+                  fileNames[selectedIndex] = fileName;
+                  document.getElementById("snapshots"+selectedIndex).src= 'file:///'+fileName;
+                  isPicture[selectedIndex] = true;
+                  var temp_index = selectedIndex;
+                  for (var i=1;i<6;i++) {
+                    if (!isPicture[selectedIndex + i]) {
+                      selectedIndex += i;
+                      if (selectedIndex > 5) {
+                        selectedIndex -= 6;
+                      }
+                      break;
+                    } 
+                  }
+
+                  if ((selectedIndex === temp_index-1) || (selectedIndex === temp_index)) {
                     if (enabled) {
                       enabled = false;
                       WebCamera.reset();
@@ -358,6 +514,7 @@
                       console.log("The camera has been disabled");
                     }
                   }
+                  document.getElementById('num').src = 'assets/num' + selectedIndex + '.png'
                 }
               });
             }
@@ -366,36 +523,44 @@
           console.log("Please enable the camera first to take the snapshot !");
         }
       }
+      
     }
 
     function clearCanvas() {
-      canvas = document.getElementById('line-board');
-      context = canvas.getContext('2d');
-      context.clearRect(0, 0, 640, 480);
+      canvas.width = isLargeScreen ? 800 : 640;
+      canvas.height = isLargeScreen ? 600 : 480;
+      context.clearRect(0, 0, (isLargeScreen ? 800 : 640), (isLargeScreen ? 600 : 480));
       document.getElementById('rightdev').innerText ='';
       document.getElementById('leftdev').innerText = '';      
     }
 
     function drwaline() {
+      console.log(points);
       clearCanvas();
       context.strokeStyle = '#000000';
       // context.lineWidth = 1;
+      b2 = Math.pow((points[1].y - points[0].y), 2);
+      c2 = Math.pow((points[2].x - points[0].x), 2)  + Math.pow((points[2].y - points[0].y), 2);
+      a2 = Math.pow((points[2].x - points[1].x), 2)  + Math.pow((points[2].y - points[1].y), 2);
 
+      cosa =(b2+c2-a2)/(2*Math.pow(b2, 0.5)*Math.pow(c2, 0.5))
       context.beginPath();
       context.moveTo(points[0].x, points[0].y);
       context.lineTo(points[2].x, points[2].y);
       context.lineTo(points[1].x, points[1].y);
       context.stroke();
-      
-      var x = points[2].x - points[1].x;
-      var y = points[1].y - points[2].y;
-      var degrees = Math.atan(x/y) * 180 / Math.PI;
+
+      var degrees = Math.acos(cosa) * 180 / Math.PI;
+
+      degrees = points[2].x > points[0].x ? degrees : -degrees;
       document.getElementById('valid').style.display = 'block';
       document.getElementById('deviation-marker').src = (degrees > 10 || degrees < -10) ? 'assets/deviation-marker.png' : 'assets/deviation-marker1.png';
       document.getElementById('valid').src = (degrees > 10 || degrees < -10) ? 'assets/invalid.png' : 'assets/valid.png';
 
       document.getElementById('rightdev').innerText = degrees.toFixed(2) + '°';
       document.getElementById('leftdev').innerText = (-degrees).toFixed(2) + '°';
+      document.getElementById('rightdev').style.color = (degrees > 10 || degrees < -10) ? 'red' : 'aqua';
+      document.getElementById('leftdev').style.color = (degrees > 10 || degrees < -10) ? 'red' : 'aqua';
     }
 
   </script>

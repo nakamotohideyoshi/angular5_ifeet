@@ -55,9 +55,10 @@
 
       <div class="right col-3 d-flex flex-column justify-content-around">
         <div class="menu d-flex flex-wrap justify-content-center">
-          <img id='btn-deviation' class="menu-img" src="assets/btn-deviation1.png" (click)="toggleDeviationMarker()">
-          <img id='btn-footer' class="menu-img" src="assets/foot-left1.png" (click)="toggleFootMarker()">
-          <img id='btn-guideline' class="menu-img" src="assets/btn-guideline1.png" (click)="toggleGuideLine()">
+          <img id='btn-save' class="menu-img mx-2" src="assets/btn-save.png" (click)="saveAnalysis()">
+          <img id='btn-deviation' class="menu-img mx-2" src="assets/btn-deviation1.png" (click)="toggleDeviationMarker()">
+          <img id='btn-footer' class="menu-img mx-2" src="assets/foot-left1.png" (click)="toggleFootMarker()">
+          <img id='btn-guideline' class="menu-img mx-2" src="assets/btn-guideline1.png" (click)="toggleGuideLine()">
         </div>
       </div>
 
@@ -95,14 +96,14 @@
         </div>  
       </div>
 
-      <div class="middle px-0 position-relative" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': '!edge?.bottom', 'left-b': '!edge?.left', 'right-b': '!edge?.right', 'object-add': isSelected }" #board>
+      <div id="board" class="middle px-0 position-relative" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': '!edge?.bottom', 'left-b': '!edge?.left', 'right-b': '!edge?.right', 'object-add': isSelected }" #board>
         <img id="main-board" src="assets/foot-background.png">
         <div id="camdemo" class="position-absolute d-flex" style="text-align: center; margin: 0 auto;"></div>
         <img id="foot-marker" class="foot-marker position-absolute" src="assets/line2.png">
         <img id="foot-marker1" class="position-absolute" src="assets/foot-left.png">
         <img id="foot-marker2" class="position-absolute" src="assets/foot-left.png">
         <img id="deviation-marker" class="deviation-marker position-absolute" src="assets/deviation-marker.png">        
-        <canvas id="line-board" class="position-absolute" width="640" height="480" (click)="setMarkerPosition($event)"></canvas>
+        <canvas id="line-board" class="position-absolute" (click)="setMarkerPosition($event)"></canvas>
         <div ngDraggable #block="ngDraggable" id="guideline-1" class="guideline position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
         </div>
         <div ngDraggable #block="ngDraggable" id="guideline-2" class="guideline position-absolute" [ngDraggable] = "true" [bounds]="board" [inBounds]="inBounds" (edge)="checkEdge($event)" [preventDefaultEvent]="true">
